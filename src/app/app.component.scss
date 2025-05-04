@@ -1,0 +1,17 @@
+#scale-wrapper{
+    transform-origin: top left;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+}
+#lane-content{
+    width: 1920px;
+    height: 1080px;
+    background-color: #fefefe;
+    border: 2px solid #fff;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}

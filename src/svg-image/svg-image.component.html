@@ -1,0 +1,46 @@
+<div  *ngIf="laneData.vertices.length > 0" class="svg-container">
+    <svg [attr.width]="svgWidth" [attr.height]="svgHeight">
+        <ng-container *ngFor="let vertex of laneData.vertices">
+           <ng-container *ngFor="let adj of vertex.adjacent">
+            <line [attr.x1]="vertex.location.coordinates[0]*scaleFactor" 
+                  [attr.y1]="vertex.location.coordinates[1]*scaleFactor" 
+                  [attr.x2]="laneData.vertices[adj.adjacentVertex].location.coordinates[0]*scaleFactor" 
+                  [attr.y2]="laneData.vertices[adj.adjacentVertex].location.coordinates[1]*scaleFactor" 
+                  stroke="blue" 
+                  stroke-width="30" />
+          </ng-container>
+        <ng-container [ngSwitch]="vertex.vertexType">
+          <ng-container *ngSwitchCase="'PRE_MERGE_POINT'">
+            <rect [attr.x]="vertex.location.coordinates[0]*scaleFactor -15"   [attr.y]="vertex.location.coordinates[1]*scaleFactor - 15"  width="30" height="30" fill="green" />
+          </ng-container>
+          <ng-container *ngSwitchCase="'LANE_MERGE'">
+            <defs>
+                <linearGradient id="grad1">
+                  <stop offset="0%" stop-color="yellow" />
+                  <stop offset="100%" stop-color="red" />
+                </linearGradient>
+            </defs>
+            <ellipse [attr.cx]="vertex.location.coordinates[0] *scaleFactor" [attr.cy]="vertex.location.coordinates[1] *scaleFactor"  rx="25" ry="15" fill="url(#grad1)" />
+          </ng-container>
+          <ng-container *ngSwitchCase="'SERVICE_POINT'">
+            <circle [attr.cx]="vertex.location.coordinates[0] *scaleFactor" 
+                    [attr.cy]="vertex.location.coordinates[1] *scaleFactor" 
+                    r="15" 
+                    fill="black" />  
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <circle [attr.cx]="vertex.location.coordinates[0] *scaleFactor" 
+                    [attr.cy]="vertex.location.coordinates[1] *scaleFactor" 
+                    r="15" 
+                    fill="black" />  
+         </ng-container>
+        </ng-container> 
+          <text [attr.x]="vertex.location.coordinates[0]*scaleFactor + 15" 
+                        [attr.y]="vertex.location.coordinates[1]*scaleFactor - 35" 
+                        font-size="28" 
+                        fill="black"> 
+                {{ vertex.name }}
+          </text>
+        </ng-container>
+      </svg>
+  </div>
