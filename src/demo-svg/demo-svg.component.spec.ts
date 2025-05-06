@@ -7,7 +7,7 @@ describe('ResponsiveSvgComponent', () => {
   let component: ResponsiveSvgComponent;
   let fixture: ComponentFixture<ResponsiveSvgComponent>;
 
-  const mockLaneData: Lane = {
+  const laneData: Lane = {
     id: "680bc0",
     name: "Lane 1",
     vertices: [
@@ -73,9 +73,8 @@ describe('ResponsiveSvgComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ResponsiveSvgComponent);
     component = fixture.componentInstance;
-    component.laneData = mockLaneData;
+    component.laneData =  laneData;
   
-    // Use real DOM elements
     const mockContainerEl = document.createElement('div');
     Object.defineProperty(mockContainerEl, 'getBoundingClientRect', {
       value: () => ({
@@ -96,7 +95,7 @@ describe('ResponsiveSvgComponent', () => {
     component.containerRef = new ElementRef(mockContainerEl);
     component.svgElementRef = new ElementRef(mockSvg);
   
-    fixture.detectChanges(); // trigger ngAfterViewInit
+    fixture.detectChanges(); 
   });
 
   it('should create the component', () => {

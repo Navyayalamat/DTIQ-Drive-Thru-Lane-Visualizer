@@ -27,9 +27,6 @@ export class ResponsiveSvgComponent implements AfterViewInit {
     const chartSize$ = new Observable<Rectangle>((subscriber) => {
       const el = this.containerRef.nativeElement;
       const emit = () => {
-        console.log(el instanceof SVGSVGElement); // should be true
-        console.log(el.getBoundingClientRect());    // should log a function
-        console.log('typeof el.getBoundingClientRect:', typeof el?.getBoundingClientRect());
         const rect = el?.getBoundingClientRect();
         subscriber.next({
           start: [0, 0],
