@@ -6,7 +6,7 @@ import { Lane } from '../common-interface';
 describe('SvgImageComponent', () => {
   let component: SvgImageComponent;
   let fixture: ComponentFixture<SvgImageComponent>;
-  let laneData =  {
+  const laneData =  {
     "id": "680bc0",
     "name": "Lane 1",
     "vertices": [

@@ -66,7 +66,7 @@ describe('AppComponent', () => {
 
   it('should call laneChanged is method', () => {
     component.lanes = mockLanes;
-    component.laneChanged({ value: 'lane-2' });
+    component.laneChanged({ event: { value: 'lane-2' } });
     expect(component.selectedLaneId).toBe('lane-2');
     expect(component.selectedLane).toEqual(mockLanes[1]);
   });

@@ -7,7 +7,7 @@
       <mat-option *ngFor="let lane of lanes" [value]="lane.id">{{lane.name}}</mat-option>
   </mat-select>
 </mat-form-field>
-<responsive-svg *ngIf="selectedLane" [laneData]="selectedLane"></responsive-svg>
+<app-responsive-svg *ngIf="selectedLane" [laneData]="selectedLane"></app-responsive-svg>
 </div>
 
 

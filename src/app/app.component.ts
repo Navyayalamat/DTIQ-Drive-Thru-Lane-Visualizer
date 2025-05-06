@@ -1,8 +1,8 @@
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
-import { SvgImageComponent } from '../svg-image/svg-image.component';
-import {MatSelectModule} from '@angular/material/select';
+import { Component,  inject, OnInit } from '@angular/core';
+// import { SvgImageComponent } from '../svg-image/svg-image.component';
+import { MatSelectModule} from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { Lane } from '../common-interface';
 import { ResponsiveSvgComponent } from '../demo-svg/demo-svg.component';
@@ -14,16 +14,14 @@ import { ResponsiveSvgComponent } from '../demo-svg/demo-svg.component';
   styleUrl: './app.component.scss',
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   http = inject(HttpClient);
   showDropDown = true;
   lanes: Lane[] = [];
-  title: string = 'Drive-Thru Lane Visualizer';
-  selectedLaneId: string = '';
+  title = 'Drive-Thru Lane Visualizer';
+  selectedLaneId = '';
   selectedLane = {} as Lane;
   
-  constructor() { }
-
   ngOnInit(){
     this.http.get<Lane[]>('api/lanes').subscribe(data => {
       this.lanes = data;

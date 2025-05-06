@@ -5,7 +5,7 @@ import { Lane, Rectangle } from '../common-interface';
 
 
 @Component({
-  selector: 'responsive-svg',
+  selector: 'app-responsive-svg',
   template: `<div #container style="width: 100%; height: 100%;">
       <svg #svgEl preserveAspectRatio="none"></svg>
     </div>`,
@@ -89,7 +89,7 @@ export class ResponsiveSvgComponent implements AfterViewInit {
       let shape: SVGElement | null = null;
 
       switch (vertex.vertexType) {
-        case 'PRE_MERGE_POINT':
+        case 'PRE_MERGE_POINT': {
           shape = document.createElementNS(svgNS, 'rect');
           shape.setAttribute('x', `${x - 15}`);
           shape.setAttribute('y', `${y - 15}`);
@@ -97,8 +97,9 @@ export class ResponsiveSvgComponent implements AfterViewInit {
           shape.setAttribute('height', `30`);
           shape.setAttribute('fill', 'green');
           break;
+        }
 
-        case 'LANE_MERGE':
+        case 'LANE_MERGE': {
           const defs = document.createElementNS(svgNS, 'defs');
           const linearGradient = document.createElementNS(svgNS, 'linearGradient');
           linearGradient.setAttribute('id', 'grad1');
@@ -123,15 +124,17 @@ export class ResponsiveSvgComponent implements AfterViewInit {
           shape.setAttribute('ry', `15`);
           shape.setAttribute('fill', 'url(#grad1)');
           break;
+        }
 
-        case 'SERVICE_POINT':
-        default:
+        case 'SERVICE_POINT': 
+        default: {
           shape = document.createElementNS(svgNS, 'circle');
           shape.setAttribute('cx', `${x}`);
           shape.setAttribute('cy', `${y}`);
           shape.setAttribute('r', `15`);
           shape.setAttribute('fill', '#0000cc');
           break;
+        }
       }
 
       if (shape) {
