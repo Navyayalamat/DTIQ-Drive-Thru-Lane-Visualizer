@@ -1,56 +1,50 @@
-# Summit
+# Drive-Thru Lane Visualizer 
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.10.
+
+## Project Introduction
+
+Drive-Thru Lane Visualizer is a single-page app built with Angular 19.2.10 that shows drive-thru lane layouts in a full-screen 1920×1080 dashboard using SVG. The app gets lane data from a mock REST API and shows lane paths, service points, and flow connections.
+
+Each lane automatically adjusts to fit the screen size, with the right amount of space around it, keeping the correct shape and making sure there are no scrollbars when you zoom in or out. All points (vertices) are based on real-world positions (in meters) and are shown correctly on the screen. Different types of points, like “Order,” “Cash,” and “Merge,” are shown using different shapes and colors to make them easy to understand. Important points like "Order" or "Cash" are labeled in big, clear text (≥28px) so they can be easily read from 3 meters away.
+
+The app has a dropdown in the top-left corner to switch between Lane 1 and Lane 2 without reloading the page. After 5 seconds the dropdown hides to keep the layout clean.
+
+This project shows how the drive-thru industry can use technology to improve lane flow and make service more efficient.
+
+## Technical Stack
+
+FroontEnd - Angular 19.2.10 Vesrion 
+
+Backend - angular-in-memory-web-api package 0.19.0 version
 
 ## Development server
 
 To start a local development server, run:
 
-```bash
-ng serve
-```
+1. Clone the project using the link https://github.com/Navyayalamat/summit.git
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+    git clone -b feature/svg-resize https://github.com/Navyayalamat/summit.git
 
-## Code scaffolding
+2. Run the below command to install all packages 
+   
+    npm install
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+3. Run the server using the below command to start backend and angular server 
+   
+    npm start 
 
-```bash
-ng generate component component-name
-```
+4. open the url http://localhost:4200 to launch the application in the browser 
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+5. Run the below command to run the test cases 
+   
+    npm test
 
-```bash
-ng generate --help
-```
+## Scaling Algorithm
 
-## Building
+The scaling algorithm takes the real-world positions (in meters) of each point on the lane and fits them onto the screen. It calculates the right size for the lane based on the space available on the screen (1920×1080). The algorithm checks the area where the lane fits and changes the size of the points to keep the shape correct. This keeps the lane looking good on the screen, without stretching or shrinking, and makes sure there are no scrollbars, no matter how much you zoom in or out on the browser.
 
-To build the project run:
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
