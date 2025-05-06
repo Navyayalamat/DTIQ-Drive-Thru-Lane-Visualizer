@@ -1,6 +1,17 @@
 
-<h2>{{title}}</h2>
+<h2 class="heading">{{title}} - {{selectedLane.name}}</h2>
 <div *ngIf="lanes.length>0">
+<mat-form-field *ngIf="showDropDown">
+  <mat-label>Select Lane</mat-label>
+  <mat-select  [(ngModel)]="selectedLaneId" (selectionChange)="laneChanged($event)">
+      <mat-option *ngFor="let lane of lanes" [value]="lane.id">{{lane.name}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<responsive-svg *ngIf="selectedLane" [laneData]="selectedLane"></responsive-svg>
+</div>
+
+
+<!-- <div *ngIf="lanes.length>0">
   <mat-form-field>
     <mat-label>Select Lane</mat-label>
     <mat-select  [(ngModel)]="selectedLaneId" (selectionChange)="laneChanged($event)">
@@ -8,4 +19,4 @@
     </mat-select>
   </mat-form-field>
     <app-svg-image *ngIf="selectedLane"  [laneData]="selectedLane"></app-svg-image>
-</div>
+</div> -->

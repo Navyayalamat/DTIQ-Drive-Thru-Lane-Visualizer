@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {  Component, HostListener, Input } from '@angular/core';
 import { Lane } from '../common-interface';
-import { SvgRendererService } from '../services/svg-renderer.service';
- import { InjectionToken } from '@angular/core';
 @Component({
   selector: 'app-svg-image',
   imports: [CommonModule],
@@ -14,23 +12,15 @@ export class SvgImageComponent {
   scaleFactor:number = 30;
   svgWidth:number = 0; 
   svgHeight:number = 0 ; 
-  svgHtml: string = '';
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
     this.scaletoFit();
   }
 
-  constructor(private svgRenderer: SvgRendererService){}
+  constructor(){}
 
   ngOnInit(){
     console.log("data lane", this.laneData)
-    // this.renderSvg();
-    this.scaletoFit();
-  
-  }
-
-  renderSvg() {
-    this.svgHtml = this.svgRenderer.generateSvg(this.laneData);
   }
 
  
@@ -57,9 +47,9 @@ export class SvgImageComponent {
     // const maxScaleHeight = window.innerHeight/ baseHeight;
     // const scale = Math.min(maxScaleWidth, maxScaleHeight)*(1-margin);
     // this.scaleWrapper.nativeElement.style.transform = `translate(-50%, -50%) scale(${scale})`
-    this.svgWidth = window.innerWidth;
-    this.svgHeight = window.innerHeight;
-    console.log("1212121",window.innerWidth);
+    // this.svgWidth = window.innerWidth;
+    // this.svgHeight = window.innerHeight;
+    // console.log("1212121",window.innerWidth);
   }
 
 
