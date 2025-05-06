@@ -1,13 +1,19 @@
-<div  *ngIf="laneData.vertices.length > 0" class="svg-container">
-    <svg [attr.width]="svgWidth" [attr.height]="svgHeight">
+<div  *ngIf= "laneData.vertices.length > 0" class="svg-container">
+    <svg [attr.width]="svgWidth" [attr.height]="svgHeight"  preserveAspectRatio="none">
         <ng-container *ngFor="let vertex of laneData.vertices">
            <ng-container *ngFor="let adj of vertex.adjacent">
             <line [attr.x1]="vertex.location.coordinates[0]*scaleFactor" 
                   [attr.y1]="vertex.location.coordinates[1]*scaleFactor" 
                   [attr.x2]="laneData.vertices[adj.adjacentVertex].location.coordinates[0]*scaleFactor" 
                   [attr.y2]="laneData.vertices[adj.adjacentVertex].location.coordinates[1]*scaleFactor" 
-                  stroke="blue" 
+                  stroke="#b3b3ff" 
                   stroke-width="30" />
+                  <!-- <path 
+                  [attr.d]="generateSmoothPath(vertex, laneData.vertices[adj.adjacentVertex])"
+                  stroke="#b3b3ff"
+                  stroke-width="30"
+                  stroke-linejoin="round"  
+                  fill="none" /> -->
           </ng-container>
         <ng-container [ngSwitch]="vertex.vertexType">
           <ng-container *ngSwitchCase="'PRE_MERGE_POINT'">
@@ -26,21 +32,28 @@
             <circle [attr.cx]="vertex.location.coordinates[0] *scaleFactor" 
                     [attr.cy]="vertex.location.coordinates[1] *scaleFactor" 
                     r="15" 
-                    fill="black" />  
+                    fill="#0000cc" />  
           </ng-container>
           <ng-container *ngSwitchDefault>
             <circle [attr.cx]="vertex.location.coordinates[0] *scaleFactor" 
                     [attr.cy]="vertex.location.coordinates[1] *scaleFactor" 
                     r="15" 
-                    fill="black" />  
+                    fill="#0000cc" />  
          </ng-container>
         </ng-container> 
+
+       
+
           <text [attr.x]="vertex.location.coordinates[0]*scaleFactor + 15" 
-                        [attr.y]="vertex.location.coordinates[1]*scaleFactor - 35" 
-                        font-size="28" 
-                        fill="black"> 
+                [attr.y]="vertex.location.coordinates[1]*scaleFactor - 25" 
+                font-size="28" 
+                font-weight="bold"
+                fill="black"> 
                 {{ vertex.name }}
           </text>
+         
         </ng-container>
       </svg>
-  </div>
+</div>
+
+<!-- <div [innerHTML]="svgHtml"></div> -->

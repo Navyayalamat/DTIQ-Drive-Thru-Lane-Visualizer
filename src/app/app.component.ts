@@ -16,6 +16,7 @@ import { Lane } from '../common-interface';
 export class AppComponent {
   http = inject(HttpClient);
   lanes: Lane[] = [];
+  title: string = 'Drive-Thru Lane Visualizer';
   selectedLaneId: string = '';
   selectedLane = {} as Lane;
   @ViewChild('scaleWrapper' , {static: false})  scaleWrapper!: ElementRef
@@ -36,16 +37,24 @@ export class AppComponent {
 
   laneChanged(event:any):void{
     this.selectedLaneId = event.value;
-    this.selectedLane = this.lanes.filter(item => item.id === event.value)[0]
+    this.selectedLane = this.lanes.filter(item => item.id === event.value)[0];
   }
 
   scaletoFit(){
-    const baseWidth = 1920;
-    const baseHeight = 1080;
-    const margin = 0.05;
-    const maxScaleWidth  = window.innerWidth/ baseWidth;
-    const maxScaleHeight = window.innerHeight/ baseHeight;
-    const scale = Math.min(maxScaleWidth, maxScaleHeight)*(1-margin);
-    this.scaleWrapper.nativeElement.style.transform = `translate(-50%, -50%) scale(${scale})`
+    // const baseWidth = 1920;
+    // const baseHeight = 1080;
+    // const margin = 0.05;
+    // const maxScaleWidth  = window.innerWidth/ baseWidth;
+    // const maxScaleHeight = window.innerHeight/ baseHeight;
+    // const scale = Math.min(maxScaleWidth, maxScaleHeight)*(1-margin);
+    // this.scaleWrapper.nativeElement.style.transform = `translate(-50%, -50%) scale(${scale})`
+    const body = document.body;
+    const html = document.documentElement;
+    const width  = window.innerWidth;
+    const height = window.innerHeight;
+    body.style.width = width + 'px';
+    body.style.height = height + 'px';
+    html.style.width = width + 'px';
+    html.style.height = height + 'px';
   }
 }

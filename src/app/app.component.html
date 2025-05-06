@@ -1,6 +1,5 @@
 
-<div id="scale-wrapper" #scaleWrapper>
-  <div id="lane-content">
+<h2>{{title}}</h2>
 <div *ngIf="lanes.length>0">
   <mat-form-field>
     <mat-label>Select Lane</mat-label>
@@ -9,6 +8,4 @@
     </mat-select>
   </mat-form-field>
     <app-svg-image *ngIf="selectedLane"  [laneData]="selectedLane"></app-svg-image>
-</div>
-</div>
 </div>
