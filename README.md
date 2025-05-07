@@ -44,4 +44,6 @@ To start a local development server, run:
 
 The scaling algorithm takes the real-world positions (in meters) of each point on the lane and fits them onto the screen. It calculates the right size for the lane based on the space available on the screen (1920×1080). The algorithm checks the area where the lane fits and changes the size of the points to keep the shape correct. This keeps the lane looking good on the screen, without stretching or shrinking, and makes sure there are no scrollbars, no matter how much you zoom in or out on the browser.
 
+When we run the server, below is the screen for Lane -1 
+![image](https://github.com/user-attachments/assets/41aa2a97-ff40-49c6-9a83-df53eb46e427)
 
