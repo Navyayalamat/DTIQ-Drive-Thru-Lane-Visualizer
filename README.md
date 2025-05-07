@@ -22,7 +22,7 @@ Backend - angular-in-memory-web-api package 0.19.0 version
 
 To start a local development server, run:
 
-1. Clone the project using the link https://github.com/Navyayalamat/summit.git
+1. Clone the project using the link https://github.com/Navyayalamat/DTIQ-Drive-Thru-Lane-Visualizer
 
      git clone https://github.com/Navyayalamat/DTIQ-Drive-Thru-Lane-Visualizer.git
 
