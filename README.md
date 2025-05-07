@@ -24,7 +24,7 @@ To start a local development server, run:
 
 1. Clone the project using the link https://github.com/Navyayalamat/summit.git
 
-    git clone https://github.com/Navyayalamat/summit.git
+     git clone https://github.com/Navyayalamat/DTIQ-Drive-Thru-Lane-Visualizer.git
 
 2. Run the below command to install all packages 
    
