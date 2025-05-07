@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { SvgImageComponent } from '../svg-image/svg-image.component';
 
 describe('AppComponent', () => {
@@ -37,6 +37,7 @@ describe('AppComponent', () => {
     httpMock = TestBed.inject(HttpTestingController);
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
+    component.showDropDown =  true;
     fixture.detectChanges();
   });
 
@@ -45,6 +46,16 @@ describe('AppComponent', () => {
   it('should create the app', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should hide dropdown after 10 seconds', fakeAsync(() => {
+    component.showDropDown = true;
+    setTimeout(() => {
+      component.showDropDown = false;
+    }, 10000);
+    expect(component.showDropDown).toBeTrue();
+    tick(10000);
+    expect(component.showDropDown).toBeFalse();
+  }));
 
   it(`should have the 'summit' title`, () => {
     expect(component.title).toEqual('Drive-Thru Lane Visualizer');
@@ -66,7 +77,7 @@ describe('AppComponent', () => {
 
   it('should call laneChanged is method', () => {
     component.lanes = mockLanes;
-    component.laneChanged({ value: 'lane-2' });
+    component.laneChanged({ value: 'lane-2' } as MatSelectChange);
     expect(component.selectedLaneId).toBe('lane-2');
     expect(component.selectedLane).toEqual(mockLanes[1]);
   });

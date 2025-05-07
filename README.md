@@ -24,7 +24,7 @@ To start a local development server, run:
 
 1. Clone the project using the link https://github.com/Navyayalamat/summit.git
 
-    git clone -b feature/svg-resize https://github.com/Navyayalamat/summit.git
+     git clone https://github.com/Navyayalamat/DTIQ-Drive-Thru-Lane-Visualizer.git
 
 2. Run the below command to install all packages 
    
@@ -45,9 +45,3 @@ To start a local development server, run:
 The scaling algorithm takes the real-world positions (in meters) of each point on the lane and fits them onto the screen. It calculates the right size for the lane based on the space available on the screen (1920×1080). The algorithm checks the area where the lane fits and changes the size of the points to keep the shape correct. This keeps the lane looking good on the screen, without stretching or shrinking, and makes sure there are no scrollbars, no matter how much you zoom in or out on the browser.
 
 
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

@@ -11,6 +11,8 @@ export interface Vertex {
       interiorPath: { coordinates: [number, number] }[];
     }[];
   }
+
+
   
 export interface Lane {
     id: string;
@@ -18,3 +20,8 @@ export interface Lane {
     vertices: Vertex[];
 }
   
+export interface Rectangle  {
+  start: [number, number];
+  end: [number, number];
+};
+

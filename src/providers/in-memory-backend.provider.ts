@@ -6,7 +6,8 @@ export function provideInMemoryBackend(): EnvironmentProviders {
   return importProvidersFrom(
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       delay: 500,
-      passThruUnknownUrl: true // optional
+      passThruUnknownUrl: true 
     })
   );
 }
+
