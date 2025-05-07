@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component,  inject, OnInit } from '@angular/core';
 // import { SvgImageComponent } from '../svg-image/svg-image.component';
-import { MatSelectModule} from '@angular/material/select';
+import { MatSelectChange, MatSelectModule} from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { Lane } from '../common-interface';
-import { ResponsiveSvgComponent } from '../demo-svg/demo-svg.component';
+import { ResponsiveSvgComponent } from '../responsive-svg/responsive-svg.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -30,10 +30,10 @@ export class AppComponent implements OnInit {
     });
     setTimeout(() => {
       this.showDropDown = false;
-    }, 10000);
+    }, 5000);
   }
 
-  laneChanged(event:any):void{
+  laneChanged(event:MatSelectChange):void{
     this.selectedLaneId = event.value;
     this.selectedLane = this.lanes.filter(item => item.id === event.value)[0];
   }

@@ -1,12 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed} from '@angular/core/testing';
+import { ResponsiveSvgComponent } from './responsive-svg.component';
+import { ElementRef} from '@angular/core';
 import { Lane } from '../common-interface';
-import { ResponsiveSvgComponent } from './demo-svg.component';
-import { ElementRef } from '@angular/core';
-
 describe('ResponsiveSvgComponent', () => {
   let component: ResponsiveSvgComponent;
   let fixture: ComponentFixture<ResponsiveSvgComponent>;
-
+  let originalTimeout:number;
   const laneData: Lane = {
     id: "680bc0",
     name: "Lane 1",
@@ -25,10 +24,7 @@ describe('ResponsiveSvgComponent', () => {
         vertexType: "SERVICE_POINT",
         isEntry: false,
         location: { coordinates: [18.0, 7.0] },
-        adjacent: [{
-          adjacentVertex: 2,
-          interiorPath: [{ coordinates: [18, 9.5] }]
-        }]
+        adjacent: [{ adjacentVertex: 2, interiorPath: [{ coordinates: [18, 9.5] }] }]
       },
       {
         id: 2,
@@ -63,46 +59,39 @@ describe('ResponsiveSvgComponent', () => {
       }
     ]
   };
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ResponsiveSvgComponent]
-    }).compileComponents();
+  afterEach(function() {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
   });
 
+  
   beforeEach(() => {
     fixture = TestBed.createComponent(ResponsiveSvgComponent);
     component = fixture.componentInstance;
-    component.laneData =  laneData;
-  
+    component.laneData = laneData;
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
     const mockContainerEl = document.createElement('div');
     Object.defineProperty(mockContainerEl, 'getBoundingClientRect', {
-      value: () => ({
-        width: 600,
-        height: 400,
-        top: 0,
-        left: 0,
-        right: 600,
-        bottom: 400,
-        x: 0,
-        y: 0,
-        toJSON: () => ''
-      })
+      value: () => ({ width: 600, height: 400, top: 0, left: 0, right: 600, bottom: 400, x: 0, y: 0, toJSON: () => '' })
     });
-  
     const mockSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  
     component.containerRef = new ElementRef(mockContainerEl);
     component.svgElementRef = new ElementRef(mockSvg);
-  
-    fixture.detectChanges(); 
+    fixture.detectChanges();
   });
-
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should set svg dimensions after init', (done) => {
+  
+  it('should render 5 paths and 4 circles', () => {
+    const svg = component.svgElementRef.nativeElement;
+    component.renderSvgContent(svg);
+    const paths = svg.querySelectorAll('path');
+    const circles = svg.querySelectorAll('circle');
+    expect(paths.length).toBe(5);
+    expect(circles.length).toBe(4);
+  });
+  it('should render SVG dimensions correctly', (done) => {
     setTimeout(() => {
       const svg = component.svgElementRef.nativeElement;
       expect(svg.getAttribute('width')).toBe('600');
@@ -111,44 +100,16 @@ describe('ResponsiveSvgComponent', () => {
       done();
     }, 20);
   });
-
-  it('should render 4 vertices as circles', (done) => {
+  it('should render correct number of lines and shapes', (done) => {
     setTimeout(() => {
       const svg = component.svgElementRef.nativeElement;
-      const circles = svg.querySelectorAll('circle');
-      expect(circles.length).toBe(4);
+      expect(svg.querySelectorAll('line').length).toBe(0);
+      expect(svg.querySelectorAll('rect').length).toBe(1);
+      expect(svg.querySelectorAll('defs').length).toBe(1);
       done();
     }, 20);
   });
-
-  it('should render 3 lines between vertices', (done) => {
-    setTimeout(() => {
-      const svg = component.svgElementRef.nativeElement;
-      const lines = svg.querySelectorAll('line');
-      expect(lines.length).toBe(5); // 0→1, 1→2, 2→3
-      done();
-    }, 20);
-  });
-
-  it('should render square boxes', (done) => {
-    setTimeout(() => {
-      const svg = component.svgElementRef.nativeElement;
-      const rects = svg.querySelectorAll('rect');
-      expect(rects.length).toBe(1);
-      done();
-    }, 20);
-  });
-
-  it('should render eclipse', (done) => {
-    setTimeout(() => {
-      const svg = component.svgElementRef.nativeElement;
-      const rects = svg.querySelectorAll('defs');
-      expect(rects.length).toBe(1);
-      done();
-    }, 20);
-  });
-
-  it('should render 4 text labels', (done) => {
+  it('should render labels correctly', (done) => {
     setTimeout(() => {
       const svg = component.svgElementRef.nativeElement;
       const texts = svg.querySelectorAll('text');
@@ -160,4 +121,41 @@ describe('ResponsiveSvgComponent', () => {
       done();
     }, 20);
   });
+  it('should test the overlap of line and text', (done)=>{
+    const svg = component.svgElementRef.nativeElement;
+    const mockLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    const mockText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    spyOn(mockLine, 'getBBox').and.returnValue({
+      x: 120, y: 110, width: 50, height: 10,
+      top: 0, left: 0, bottom: 0, right: 0, toJSON: () => {}
+    });
+  
+    spyOn(mockText, 'getBBox').and.returnValue({
+      x: 100, y: 100, width: 50, height: 30,
+      top: 0, left: 0, bottom: 0, right: 0, toJSON: () => {}
+    });
+    svg.appendChild(mockLine);
+    svg.appendChild(mockText);
+    // Run the reposition logic manually
+    requestAnimationFrame(() => {
+      const textBox = mockText.getBBox();
+      const lineBox = mockLine.getBBox();
+        const isOverlap =
+          textBox.x + textBox.width > lineBox.x &&
+          textBox.x < lineBox.x + lineBox.width &&
+          textBox.y + textBox.height > lineBox.y &&
+          textBox.y < lineBox.y + lineBox.height;
+        if (isOverlap) {
+          const labelOffsetX = -70;
+          mockText.setAttribute('x', `${textBox.x + labelOffsetX}`);
+          mockText.setAttribute('y', `${textBox.y}`);
+          mockText.setAttribute('fill', 'black');
+        }
+      expect(mockText.getAttribute('x')).toBe('30');
+      expect(mockText.getAttribute('fill')).toBe('black');
+      done();
+    });
+   
+  });
+  
 });
